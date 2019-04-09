@@ -17,7 +17,7 @@ public class JsonTest {
         ObjectMapper objMapper = new ObjectMapper();
         try {
             String json = objMapper.writeValueAsString(result);
-            System.out.println(json); //"OK"
+            System.out.println(json); //"OK "
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
