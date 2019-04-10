@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--当返回行的所有列都是空时，MyBatis默认返回null  注意pom.xml ：mybatis 1.3.0-->
+        <setting name="returnInstanceForEmptyRow" value="true"/>
+        <!-- 显示查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--是否使用缓存-->
+        <setting name="cacheEnabled" value="true" />
+        <!-- 懒加载 -->
+        <setting name="lazyLoadingEnabled" value="true" />
+        <!--是否允许单条sql 返回多个数据集  (取决于驱动的兼容性) default:true-->
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <!--是否可以使用列的别名 (取决于驱动的兼容性) default:true-->
+        <setting name="useColumnLabel" value="true"/>
+    </settings>
+
+    <!--
+      3.typeAliases:起别名的标签
+          typeAlias:为某个java类型起别名
+              type:指定要起别名的全类名，默认别名就是类小写，(但是其实他是不区分大小写的，也就是说你全部大写也没问题)
+              alias:新的别名
+          package:为某个包下的类批量起别名(这个会存在的一个问题就是可能会重复，重复的情况下还可以用@Alias来解决)
+              name:指定包名(这个就相当于是为这个包下的所有的类都创建了一个默认的别名)
+      当然还有一个起别名的方式就是在实体上使用@Alias来起别名
+      注：起别名看自己的情况，推荐还是在mapper文件中使用全类名
+  -->
+    <typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+    </typeAliases>
+</configuration>
