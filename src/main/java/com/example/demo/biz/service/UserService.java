@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.TransactionCallback;
@@ -139,6 +140,93 @@ public class UserService {
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addRequired(User user){
+        userMapper.insertUser(user);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addRequiredException(User user){
+        userMapper.insertUser(user);
+        throw new RuntimeException();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addRequiresNew(User user){
+        userMapper.insertUser(user);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addRequiresNewException(User user){
+        userMapper.insertUser(user);
+        throw new RuntimeException();
+    }
+
+    private User createUser(String userName){
+        User user1 = new User();
+        user1.setUserName(userName);
+        user1.setPassWord("xiaoribiao001");
+        user1.setAddress("长安");
+        user1.setEmail("xiaoribiao@163.com");
+        user1.setGender("1");
+        user1.setIdentity("321736165502567129");
+        return user1;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void doHandleTrans(){
+        User user1 = createUser("三狗子");
+        addRequired(user1);
+        User user2 = createUser("雅少");
+        try{
+            addRequiresNewException(user2);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void doHandleTrans_bak1(){
+        User user1 = createUser("三狗子");
+        addRequired(user1);
+        User user2 = createUser("雅少");
+
+        try{
+            addRequiredException(user2);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void doHandleTrans_bak2(){
+        User user1 = createUser("三狗子");
+        addRequired(user1);
+        User user2 = createUser("雅少");
+
+        try{
+            addRequired(user2);
+            throw new RuntimeException();
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void doHandleTrans_bak3(){
+        User user1 = createUser("三狗子");
+        userMapper.insertUser(user1);
+        User user2 = createUser("雅少");
+
+        try{
+            userMapper.insertUser(user2);
+            throw new RuntimeException();
+        }catch (RuntimeException e){
             e.printStackTrace();
         }
     }

@@ -3,16 +3,21 @@ package com.example.demo.biz;
 import com.example.demo.biz.dao.UserMapper;
 import com.example.demo.biz.dto.User;
 import com.example.demo.biz.service.UserService;
+import com.example.demo.biz.service.UserService2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@EnableTransactionManagement
 public class UserTest {
 
     @Autowired
@@ -26,6 +31,9 @@ public class UserTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserService2 userService2;
 
     @Test
     public void test1(){
@@ -81,5 +89,16 @@ public class UserTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void test7(){
+        //userService.doHandleTrans();
+        userService.doHandleTrans_bak1();
+    }
+
+    @Test
+    public void test8(){
+        userService2.doHandleTrans_5();
     }
 }
