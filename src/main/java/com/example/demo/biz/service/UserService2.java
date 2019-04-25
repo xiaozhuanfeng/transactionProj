@@ -66,4 +66,50 @@ public class UserService2 {
             e.printStackTrace();
         }
     }
+
+    public void doHandleNoTransNested1(){
+        User user1 = createUser("三狗子");
+        userService.addNested(user1);
+        User user2 = createUser("雅少");
+        userService.addNested(user2);
+        throw new RuntimeException();
+    }
+
+    public void doHandleNoTransNested2(){
+        User user1 = createUser("三狗子");
+        userService.addNested(user1);
+        User user2 = createUser("雅少");
+        userService.addNestedException(user2);
+    }
+
+    @Transactional
+    public void doHandleTransNested3(){
+        User user1 = createUser("三狗子");
+        userService.addNested(user1);
+        User user2 = createUser("雅少");
+        userService.addNested(user2);
+        throw new RuntimeException();
+    }
+
+    @Transactional
+    public void doHandleTransNested4(){
+        User user1 = createUser("三狗子");
+        userService.addNested(user1);
+        User user2 = createUser("雅少");
+        userService.addNestedException(user2);
+    }
+
+    @Transactional
+    public void doHandleTransNested5(){
+        User user1 = createUser("三狗子");
+        userService.addNested(user1);
+        User user2 = createUser("雅少");
+        try{
+            userService.addNestedException(user2);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 }

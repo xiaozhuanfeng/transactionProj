@@ -167,68 +167,15 @@ public class UserService {
         throw new RuntimeException();
     }
 
-    private User createUser(String userName){
-        User user1 = new User();
-        user1.setUserName(userName);
-        user1.setPassWord("xiaoribiao001");
-        user1.setAddress("长安");
-        user1.setEmail("xiaoribiao@163.com");
-        user1.setGender("1");
-        user1.setIdentity("321736165502567129");
-        return user1;
+    @Transactional(propagation = Propagation.NESTED)
+    public void addNested(User user){
+        userMapper.insertUser(user);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void doHandleTrans(){
-        User user1 = createUser("三狗子");
-        addRequired(user1);
-        User user2 = createUser("雅少");
-        try{
-            addRequiresNewException(user2);
-        }catch (RuntimeException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void doHandleTrans_bak1(){
-        User user1 = createUser("三狗子");
-        addRequired(user1);
-        User user2 = createUser("雅少");
-
-        try{
-            addRequiredException(user2);
-        }catch (RuntimeException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void doHandleTrans_bak2(){
-        User user1 = createUser("三狗子");
-        addRequired(user1);
-        User user2 = createUser("雅少");
-
-        try{
-            addRequired(user2);
-            throw new RuntimeException();
-        }catch (RuntimeException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void doHandleTrans_bak3(){
-        User user1 = createUser("三狗子");
-        userMapper.insertUser(user1);
-        User user2 = createUser("雅少");
-
-        try{
-            userMapper.insertUser(user2);
-            throw new RuntimeException();
-        }catch (RuntimeException e){
-            e.printStackTrace();
-        }
+    @Transactional(propagation = Propagation.NESTED)
+    public void addNestedException(User user){
+        userMapper.insertUser(user);
+        throw new RuntimeException();
     }
 
 }

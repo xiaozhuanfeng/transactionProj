@@ -92,13 +92,7 @@ public class UserTest {
     }
 
     @Test
-    public void test7(){
-        //userService.doHandleTrans();
-        userService.doHandleTrans_bak1();
-    }
-
-    @Test
     public void test8(){
-        userService2.doHandleTrans_5();
+        userService2.doHandleTransNested5();
     }
 }
